@@ -11,6 +11,11 @@ class Role extends Model
 
     protected $fillable = ['name'];
 
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = ucwords($value);
+    }
+
     public function faculties()
     {
         return $this->hasMany(Faculty::class);
