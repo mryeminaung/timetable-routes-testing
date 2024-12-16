@@ -9,11 +9,16 @@ class Course extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'course_no', 'credit_id', 'program_id'];
+    protected $fillable = ['title', 'course_code', 'credit', 'program_id'];
 
-    public function credit()
+    public function setTitleAttribute($value)
     {
-        return $this->belongsTo(Credit::class);
+        $this->attributes['title'] = ucwords($value);
+    }
+
+    public function setCourseCodeAttribute($value)
+    {
+        $this->attributes['course_code'] = ucwords($value);
     }
 
     public function program()

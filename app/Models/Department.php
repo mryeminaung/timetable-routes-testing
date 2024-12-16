@@ -11,6 +11,13 @@ class Department extends Model
 
     protected $fillable = ['name'];
 
+    // public $timestamps = false;
+
+    public function setNameAttribute($name)
+    {
+        $this->attributes['name'] = ucwords($name);
+    }
+
     public function faculties()
     {
         return $this->hasMany(Faculty::class);
