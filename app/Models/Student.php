@@ -9,10 +9,16 @@ class Student extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'nickname', 'roll_no', 'email', 'password', 'semester_id', 'major_id', 'class_id', 'gpa_id'];
+    protected $fillable = ['name', 'nickname', 'roll_no', 'email', 'password', 'semester_id', 'major_id', 'class_id'];
 
     public function major()
     {
         return $this->belongsTo(Major::class);
     }
+
+    public function semester()
+    {
+        return $this->belongsTo(Semester::class);
+    }
+    
 }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('class_rooms', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('name')->unique();
+            $table->string('name')->unique();
             $table->unsignedBigInteger('capacity');
             $table->timestamps();
         });

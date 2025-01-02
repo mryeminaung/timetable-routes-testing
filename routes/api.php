@@ -5,7 +5,6 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\MajorController;
-use App\Models\Faculty;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

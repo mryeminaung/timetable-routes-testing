@@ -9,13 +9,18 @@ class Department extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'short_name'];
 
     // public $timestamps = false;
 
     public function setNameAttribute($name)
     {
         $this->attributes['name'] = ucwords($name);
+    }
+
+    public function setShortNameAttribute($name)
+    {
+        $this->attributes['short_name'] = strtoupper($name);
     }
 
     public function faculties()

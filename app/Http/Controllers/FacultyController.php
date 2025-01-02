@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Faculty;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FacultyController extends Controller
 {
