@@ -15,39 +15,81 @@ class FacultySeeder extends Seeder
      */
     public function run(): void
     {
-        // Faculty::factory(10)->create();
         $data = [];
         $hashedPassword = bcrypt('password');
-        // Define male and female name components
-        $maleNames = ['Aung', 'Kyaw', 'Min', 'Tun', 'Soe', 'Naing'];
-        $femaleNames = ['Moe', 'May', 'Hnin', 'Yin', 'Nwe', 'Thiri'];
 
         for ($faculty = 1; $faculty <= 100; $faculty++) {
 
+            // Define male and female name components
+            $maleNames = ['Aung', 'Kyaw', 'Min', 'Tun', 'Soe', 'Naing'];
+            $femaleNames = ['Moe', 'May', 'Hnin', 'Yin', 'Nwe', 'Thiri'];
+
             // Even rolls: Male, Odd rolls: Female
             $isMale = $faculty % 2 == 0;
+
+            $phoneNo = $this->generatePhoneNo();
 
             // Determine gender and create a name with up to three parts
             $name = $isMale
                 ? $this->generateName($maleNames, 'U')
                 : $this->generateName($femaleNames, 'Daw');
 
-            $username = strtolower(implode('-', array_slice(explode(' ', $name), 1)));
-
-            $email = "{$username}@miit.edu.mm";
+            $email = $this->generateEmail($faculty, $name);
 
             $data[] = [
                 'name' => $name,
                 'email' => $email,
                 'password' => $hashedPassword,
                 'gender' => $isMale ? 'Male' : 'Female',
-                'phone_number' => fake()->phoneNumber(),
+                'phone_number' => $phoneNo,
                 'role_id' => fake()->numberBetween(1, Role::count()),
                 'department_id' => fake()->numberBetween(1, Department::count()),
                 'created_at' => now(),
             ];
         }
         Faculty::insert($data);
+    }
+
+    /**
+     * Generate an email address based on the faculty's name.
+     *
+     * @param string $faculty
+     * @param string $name
+     * @return string
+     */
+    private function generateEmail(string $faculty, string $name)
+    {
+        $username = strtolower(implode('-', array_slice(explode(' ', $name), 1)));
+        $email = "{$username}@miit.edu.mm";
+        return $email;
+    }
+
+    /**
+     * Generate a Myanmar phone number with a random operator.
+     *
+     * @return string
+     */
+    private function generatePhoneNo(): string
+    {
+        $operators = [
+            'Telenor' => ['7', '8'], // Example Telenor prefixes
+            'Ooredoo' => ['9', '5'], // Example Ooredoo prefixes
+            'MPT'     => ['6', '4'], // Example MPT prefixes
+        ];
+
+        // Randomly select an operator
+        $operator = array_rand($operators);
+
+        // Get a random prefix for the selected operator
+        $prefix = fake()->randomElement($operators[$operator]);
+
+        // Generate a random 8-digit subscriber numbe
+        $subscriberNumber = fake()->numberBetween(10000000, 99999999);
+
+        // Combine to form the phone number
+        $phoneNumber = "+959 " . $prefix . $subscriberNumber;
+
+        return $phoneNumber;
     }
 
     /**

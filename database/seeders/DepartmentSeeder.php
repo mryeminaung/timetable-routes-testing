@@ -14,16 +14,16 @@ class DepartmentSeeder extends Seeder
     public function run(): void
     {
         $departments = [
-            ["name" => "Computer Science", "short_name" => "CS"],
-            ["name" => "Computer Engineering", "short_name" => "CE"],
-            ["name" => "Software Engineering", "short_name" => "SE"],
-            ["name" => "Information Science and Technology", "short_name" => "IST"],
-            ["name" => "Data Science and Artificial Intelligence", "short_name" => "DS & AI"],
-            ["name" => "Networking and Cybersecurity", "short_name" => "NCS"],
-            ["name" => "Robotics and Automation", "short_name" => "RA"],
-            ["name" => "Electronics and Communications Engineering", "short_name" => "ECE"],
+            ["name" => "Computer Science", "dept_code" => "CS"],
+            ["name" => "Computer Engineering", "dept_code" => "CE"],
+            ["name" => "Software Engineering", "dept_code" => "SE"],
+            ["name" => "Information Science and Technology", "dept_code" => "IST"],
+            ["name" => "Data Science and Artificial Intelligence", "dept_code" => "DS & AI"],
+            ["name" => "Networking and Cybersecurity", "dept_code" => "NCS"],
+            ["name" => "Robotics and Automation", "dept_code" => "RA"],
+            ["name" => "Electronics and Communications Engineering", "dept_code" => "ECE"],
         ];
-        
+
         foreach ($departments as $department) {
             Department::create($department);
         }
