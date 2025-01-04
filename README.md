@@ -1,6 +1,15 @@
-# Setting Up Laravel Project
+# Scheduling Exam Timetable using CSP Solutions
 
-Follow these steps to set up your Laravel project after cloning it from a GitHub repository:
+## Overview
+
+The project aims to create an exam schedule using Constraint Satisfaction Problem (CSP) solutions that accommodates the needs of all stakeholders. This schedule will address constraints such as:
+- Allowing invigilators teaching a subject to be exempt from waiting for the exam room except the requested.
+- Ensuring that each invigilator spends time in the exam room at least once a day as soon as possible.
+- Guaranteeing that each student can only take one exam per day.
+
+By using **CSP solutions**, this project aims to efficiently and effectively develop a timetable that meets the requirements of all parties involved in the examination process.
+
+**Note:** This repository is intended solely for CSP project API testing.
 
 ## Prerequisites
 
