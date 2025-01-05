@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ClassRoomController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DepartmentController;
@@ -12,8 +13,13 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // })->middleware('auth:sanctum');
 
-Route::apiResource('majors', MajorController::class);
-Route::apiResource('classrooms', ClassRoomController::class);
-Route::apiResource('departments', DepartmentController::class);
-Route::apiResource('courses', CourseController::class);
-Route::apiResource('faculties', FacultyController::class);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('faculties', FacultyController::class);
+    Route::apiResource('departments', DepartmentController::class);
+    Route::apiResource('majors', MajorController::class);
+    Route::apiResource('courses', CourseController::class);
+    Route::apiResource('classrooms', ClassRoomController::class);
+});
+
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
