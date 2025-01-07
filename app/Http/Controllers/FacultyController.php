@@ -26,9 +26,13 @@ class FacultyController extends Controller
         return Excel::download(new FacultiesExport, 'faculties.xlsx');
     }
 
-    public function importExcel()
+    public function importExcel(Request $request)
     {
-        Excel::import(new FacultiesImport, request()->file('file'));
+        $validated = $request->validate([
+            'myFile' => 'required|mimes:xlsx,xls',
+        ]);
+
+        Excel::import(new FacultiesImport, $request->file('myFile'));
 
         return redirect()->route('faculties.index')->with('status', 'Faculties imported successfully');
     }

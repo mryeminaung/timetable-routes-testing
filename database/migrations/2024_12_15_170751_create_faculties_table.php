@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('email');
             $table->string('phone_number')->unique();
-            $table->foreignId('role_id');
-            $table->foreignId('department_id');
+            $table->foreignId('role_id')->default(3);
+            $table->foreignId('department_id')->default(3);
             $table->timestamps();
         });
     }

@@ -12,20 +12,22 @@
             </div>
         @endif
 
+        <h3 class="">Faculty List</h3>
+
         <div class="d-flex justify-content-between align-items-center">
-            <h3 class="">Faculty List</h3>
-            <div class="d-flex">
-                <a class="btn btn-warning" href="{{ route('faculties.export-excel') }}">Export As Excel File</a>
-                <form class="ms-3" action="{{ route('faculties.import-excel') }}" method="post">
+            <div class="d-flex justify-content-start align-items-center">
+                <form class="border" action="{{ route('faculties.import-excel') }}" method="post" id="excel-import"
+                    enctype="multipart/form-data">
                     @csrf
                     @method('post')
-                    <button class="btn btn-success" type="submit">Import Data</button>
+                    <input type="file" class="form-control" name="myFile" id="myFile" />
                 </form>
+                <button form="excel-import" class="btn btn-success ms-3" type="submit">Import Data</button>
             </div>
+            <a class="btn btn-warning" href="{{ route('faculties.export-excel') }}">Export As Excel File</a>
         </div>
-
         <hr>
-        <table class="table table-striped table-hover">
+        <table class="table table-bordered table-hover">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
@@ -33,6 +35,8 @@
                     <th scope="col">Gender</th>
                     <th scope="col">Email</th>
                     <th scope="col">Phone Number</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Department</th>
                 </tr>
             </thead>
             <tbody>
@@ -43,6 +47,8 @@
                         <td>{{ $faculty->gender }}</td>
                         <td>{{ $faculty->email }}</td>
                         <td>{{ $faculty->phone_number }}</td>
+                        <td>{{ $faculty->role->title }}</td>
+                        <td>{{ $faculty->department->name }}</td>
                     </tr>
                 @endforeach
             </tbody>
