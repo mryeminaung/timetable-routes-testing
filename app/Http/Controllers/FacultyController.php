@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Faculty;
 use Illuminate\Http\Request;
 use App\Exports\FacultiesExport;
+use App\Imports\FacultiesImport;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -16,13 +17,20 @@ class FacultyController extends Controller
     public function index()
     {
         return view('faculty.index', [
-            'faculties' => Faculty::all()
+            'faculties' => Faculty::orderByDesc('id')->simplePaginate(10)
         ]);
     }
 
     public function exportExcel()
     {
         return Excel::download(new FacultiesExport, 'faculties.xlsx');
+    }
+
+    public function importExcel()
+    {
+        Excel::import(new FacultiesImport, request()->file('file'));
+
+        return redirect()->route('faculties.index')->with('status', 'Faculties imported successfully');
     }
 
     /**

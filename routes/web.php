@@ -8,4 +8,7 @@ Route::get('/', function () {
 });
 
 Route::get('faculties', [FacultyController::class, 'index']);
+
 Route::get('faculties/exporting-excel', [FacultyController::class, 'exportExcel'])->name('faculties.export-excel');
+
+Route::post('faculties/importing-excel', [FacultyController::class, 'exportExcel'])->name('faculties.import-excel');
