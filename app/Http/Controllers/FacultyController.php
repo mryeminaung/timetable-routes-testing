@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Faculty;
 use Illuminate\Http\Request;
+use App\Exports\FacultiesExport;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FacultyController extends Controller
 {
@@ -13,7 +15,14 @@ class FacultyController extends Controller
      */
     public function index()
     {
-        return Faculty::all();
+        return view('faculty.index', [
+            'faculties' => Faculty::all()
+        ]);
+    }
+
+    public function exportExcel()
+    {
+        return Excel::download(new FacultiesExport, 'faculties.xlsx');
     }
 
     /**
