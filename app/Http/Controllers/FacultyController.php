@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Faculty;
 use Illuminate\Http\Request;
 use App\Exports\FacultiesExport;
+use App\Http\Requests\faculty\StoreFacultyRequest;
 use App\Imports\FacultiesImport;
-use Illuminate\Support\Facades\DB;
+use App\Models\Department;
+use App\Models\Image;
+use App\Models\Role;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
 class FacultyController extends Controller
@@ -42,17 +46,45 @@ class FacultyController extends Controller
      */
     public function create()
     {
-        return 'Faculty Create Form';
+        $roles = Role::all();
+        $departments = Department::all();
+
+        return view('faculty.create', [
+            'roles' => $roles,
+            'departments' => $departments
+        ]);
+        // return 'Faculty Create Form';
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreFacultyRequest $request)
     {
-        $faculty = Faculty::create($request->all());
+        $data = $request->validated();
 
-        return response()->json(['message' => 'Faculty created successfully', 'faculty' => $faculty]);
+        $faculty = Faculty::create($data);
+
+        // handling profile image uploading
+        if ($request->hasFile('profilePic')) {
+            $file = $request->file('profilePic')->store('faculties', [
+                'disk' => 's3',
+                'visibility' => 'public'
+            ]);
+
+            $url = 'https://special-project-3001.s3.ap-southeast-1.amazonaws.com/' . $file;
+
+            $image = new Image(['url' => $url]);
+
+            $faculty->image()->save($image);
+
+            // Log::info('url =>' . 'https://special-project-3001.s3.ap-southeast-1.amazonaws.com/' . $file);
+
+            // $request->merge(['image' => $image]);
+            // return 'Profile Image uploaded successfully';
+        }
+
+        return redirect()->route('faculties.create')->with(['message' => 'Faculty created successfully']);
     }
 
     /**

@@ -20,5 +20,9 @@ class Student extends Model
     {
         return $this->belongsTo(Semester::class);
     }
-    
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
 }

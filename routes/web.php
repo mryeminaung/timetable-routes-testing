@@ -27,7 +27,7 @@ Route::post('uploading', function (Request $request) {
     return redirect()->back()->with('message', 'File uploading Failed!');
 })->name('uploading');
 
-Route::get('faculties', [FacultyController::class, 'index'])->name('faculties.index');
+Route::resource('faculties', FacultyController::class);
 
 Route::get('faculties/exporting-excel', [FacultyController::class, 'exportExcel'])->name('faculties.export-excel');
 

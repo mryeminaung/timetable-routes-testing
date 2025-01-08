@@ -21,7 +21,7 @@
                 <form action="{{ route('uploading') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('post')
-                    <div class="mb-3">
+                    <div class="mb-3"> 
                         <label for="formFile" class="form-label">
                             <h3>Uploading File to S3 Bucket</h3>
                         </label>

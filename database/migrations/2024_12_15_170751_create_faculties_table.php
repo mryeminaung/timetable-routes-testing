@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('gender');
-            $table->string('password');
+            $table->string('password')->default('password');
             $table->string('email');
             $table->string('phone_number')->unique();
             $table->foreignId('role_id')->default(3);
