@@ -1,8 +1,8 @@
 @extends('layout.app')
 
-@props(['faculties', 'noOfFaculty'])
+@props(['departments', 'noOfDepartment'])
 
-@section('title', 'Faculty List')
+@section('title', 'Department List')
 
 @section('content')
     <div class="table-responsive">
@@ -12,7 +12,7 @@
             </div>
         @endif
 
-        <h3>Total Faculties: {{ $noOfFaculty }}</h3>
+        <h3>Total Departments: {{ $noOfDepartment }}</h3>
 
         <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex justify-content-start align-items-center">
@@ -26,7 +26,7 @@
             </div>
             <div class="">
                 <a class="btn btn-warning" href="{{ route('faculties.export-excel') }}">Export As Excel File</a>
-                <a class="btn btn-primary" href="{{ route('faculties.create') }}">Add New Faculty</a>
+                <a class="btn btn-primary" href="{{ route('faculties.create') }}">Add New Department</a>
             </div>
         </div>
         <hr>
@@ -35,27 +35,20 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Name</th>
-                    {{-- <th scope="col">Gender</th> --}}
-                    <th scope="col">Email</th>
-                    <th scope="col">Phone Number</th>
-                    <th scope="col">Role</th>
-                    <th scope="col">Department</th>
+                    <th scope="col">Department Code</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($faculties as $faculty)
+                @foreach ($departments as $department)
                     <tr class="">
-                        <td scope="row">{{ $faculty->id }}</td>
-                        <td>{{ $faculty->name }}</td>
-                        {{-- <td>{{ $faculty->gender }}</td> --}}
-                        <td>{{ $faculty->email }}</td>
-                        <td>{{ $faculty->phone_number }}</td>
-                        <td>{{ $faculty->role->title }}</td>
-                        <td>{{ $faculty->department->name }}</td>
+                        <td scope="row">{{ $department->id }}</td>
+                        <td>{{ $department->name }}</td>
+                        <td>{{ $department->dept_code }}</td>
                         <td>
-                            <a class="btn btn-primary" href="{{ route('faculties.edit', $faculty->id) }}">Edit</a>
-                            <form action="{{ route('faculties.destroy', $faculty->id) }}" method="POST" class="d-inline">
+                            <a class="btn btn-primary" href="{{ route('departments.edit', $department->id) }}">Edit</a>
+                            <form action="{{ route('departments.destroy', $department->id) }}" method="POST"
+                                class="d-inline">
                                 @csrf
                                 @method('delete')
                                 <button class="btn btn-danger" type="submit">Delete</button>
@@ -64,6 +57,6 @@
                 @endforeach
             </tbody>
         </table>
-        {{ $faculties->links() }}
+        {{ $departments->links() }}
     </div>
 @endsection

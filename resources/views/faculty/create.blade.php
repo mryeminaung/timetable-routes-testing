@@ -18,6 +18,8 @@
         </div>
     @endif
 
+    <h2 class="mt-3">Add New Faculty</h2>
+    <hr>
     <form action="{{ route('faculties.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('post')

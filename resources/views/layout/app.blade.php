@@ -12,8 +12,15 @@
 </head>
 
 <body>
-    <div class="container">
-        @yield('content')
+    <div class="container-fluid px-5 border">
+        <div class="row my-5">
+            <div class="col-2">
+                @include('components.sidebar')
+            </div>
+            <div class="col-10">
+                @yield('content')
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

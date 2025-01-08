@@ -11,7 +11,7 @@ class UpdateFacultyRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class UpdateFacultyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'phone_number' => 'required|string',
+            'profilePic' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'gender' => 'required|string',
+            'password' => 'nullable|string',
         ];
     }
 }

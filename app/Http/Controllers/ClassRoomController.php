@@ -12,7 +12,10 @@ class ClassRoomController extends Controller
      */
     public function index()
     {
-        return ClassRoom::all();
+        return view('room.index', [
+            'rooms' => ClassRoom::simplePaginate(10),
+            'noOfRoom' => ClassRoom::count()
+        ]);
     }
 
     /**

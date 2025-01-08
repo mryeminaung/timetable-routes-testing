@@ -6,6 +6,7 @@ use App\Models\Faculty;
 use Illuminate\Http\Request;
 use App\Exports\FacultiesExport;
 use App\Http\Requests\faculty\StoreFacultyRequest;
+use App\Http\Requests\faculty\UpdateFacultyRequest;
 use App\Imports\FacultiesImport;
 use App\Models\Department;
 use App\Models\Image;
@@ -21,7 +22,8 @@ class FacultyController extends Controller
     public function index()
     {
         return view('faculty.index', [
-            'faculties' => Faculty::orderByDesc('id')->simplePaginate(10)
+            'faculties' => Faculty::orderByDesc('id')->simplePaginate(10),
+            'noOfFaculty' => Faculty::count()
         ]);
     }
 
@@ -32,7 +34,7 @@ class FacultyController extends Controller
 
     public function importExcel(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'myFile' => 'required|mimes:xlsx,xls',
         ]);
 
@@ -84,7 +86,7 @@ class FacultyController extends Controller
             // return 'Profile Image uploaded successfully';
         }
 
-        return redirect()->route('faculties.create')->with(['message' => 'Faculty created successfully']);
+        return redirect()->route('faculties.index')->with(['message' => 'Faculty created successfully']);
     }
 
     /**
@@ -100,17 +102,25 @@ class FacultyController extends Controller
      */
     public function edit(Faculty $faculty)
     {
-        return 'Faculty Edit Form';
+        $roles = Role::all();
+        $departments = Department::all();
+
+        return view('faculty.edit', [
+            'faculty' => $faculty,
+            'roles' => $roles,
+            'departments' => $departments
+        ]);
+        // return 'Faculty Edit Form';
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Faculty $faculty)
+    public function update(UpdateFacultyRequest $request, Faculty $faculty)
     {
-        $faculty->update($request->all());
+        $faculty->update($request->validated());
 
-        return response()->json(['message' => 'Faculty updated successfully', 'faculty' => $faculty]);
+        return redirect()->route('faculties.index')->with(['message' => 'Faculty updated successfully']);
     }
 
     /**
@@ -120,6 +130,6 @@ class FacultyController extends Controller
     {
         $faculty->delete();
 
-        return response()->json(['message' => 'Faculty deleted successfully']);
+        return redirect()->route('faculties.index')->with(['message' => 'Faculty deleted successfully']);
     }
 }

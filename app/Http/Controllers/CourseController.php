@@ -12,7 +12,10 @@ class CourseController extends Controller
      */
     public function index()
     {
-        return Course::all();
+        return view('course.index', [
+            'courses' => Course::simplePaginate(10),
+            'noOfCourse' => Course::count()
+        ]);
     }
 
     /**
@@ -20,7 +23,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        return 'Course Create Form';
+        return view('course.create');
     }
 
     /**
@@ -47,7 +50,7 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        return 'Course Edit Form';
+        return view('course.edit');
     }
 
     /**

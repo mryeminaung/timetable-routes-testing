@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('password')->default('password');
             $table->string('email');
             $table->string('phone_number')->unique();
-            $table->foreignId('role_id')->default(3);
-            $table->foreignId('department_id')->default(3);
+            $table->foreignId('role_id')->default(3)->constrained()->cascadeOnDelete();
+            $table->foreignId('department_id')->default(3)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

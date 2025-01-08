@@ -12,7 +12,10 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        return Department::all();
+        return view('department.index', [
+            'departments' => Department::simplePaginate(10),
+            'noOfDepartment' => Department::count()
+        ]);
     }
 
     /**

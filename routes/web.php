@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\ClassRoomController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\FacultyController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
@@ -27,8 +31,12 @@ Route::post('uploading', function (Request $request) {
     return redirect()->back()->with('message', 'File uploading Failed!');
 })->name('uploading');
 
-Route::resource('faculties', FacultyController::class);
-
 Route::get('faculties/exporting-excel', [FacultyController::class, 'exportExcel'])->name('faculties.export-excel');
 
 Route::post('faculties/importing-excel', [FacultyController::class, 'importExcel'])->name('faculties.import-excel');
+
+Route::resource('faculties', FacultyController::class);
+Route::resource('departments', DepartmentController::class);
+Route::resource('courses', CourseController::class);
+Route::resource('rooms', ClassRoomController::class);
+Route::resource('students', StudentController::class);
